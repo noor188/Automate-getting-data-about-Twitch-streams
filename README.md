@@ -1,2 +1,2 @@
-# Automate getting information about Twitch streams
- End goal: Get information about 100 Twitch streams using Python, Twitch API and object oriented programming.
+# Automate getting Data about Twitch streams
+ End goal: Get data about 100 Twitch streams using Python, Twitch API and object oriented programming.
