@@ -24,9 +24,9 @@ def main(args):
             print(help_meg)
             sys.exit(0)
         elif opt == '-i':
-            print(f'Client ID {val}')
+            print(f'Client ID {val} ')
         elif opt == '-s':
-            print(f'Client Secret {val}')
+            print(f'Client Secret {val} ')
 
 
 if __name__ == '__main__':
