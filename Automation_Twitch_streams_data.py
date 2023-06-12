@@ -18,7 +18,7 @@ def main(args):
         print(help_meg)
         sys.exit(2)
 
-    print('Great we got your Client ID and secret')
+    print('Great we got your Client ID and secret ')
     for opt, val in opts:
         if opt == '-h':
             print(help_meg)
