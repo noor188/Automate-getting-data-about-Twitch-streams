@@ -1,9 +1,32 @@
-# application name : Get_Streams_Data
-# Client ID / Client Secret Get_Streams_Data in password.txt file
-def main():
-    print("Hello world!")
-    pass
+'''
+	Get data about 100 Twitch streams. Mincraft game (game_id=512980).
+	application name : Get_Streams_Data
+	Client ID / Client Secret Get_Streams_Data in password.txt file
+'''
+import sys
+import getopt
+
+
+def main(args):
+    help_meg = 'Automation_Twitch_streams_data.py  -i <clientID> -s <clientSecret>'
+
+    try:
+        opts, args = getopt.getopt(
+            args, 'h:i:s', ['clientID=', 'clientSecret='])
+    except getopt.GetoptError as msg:
+        print(msg)
+        print(help_meg)
+        sys.exit(2)
+
+    for opt, val in opts:
+        if opt == '-h':
+            print(help_meg)
+            sys.exit(0)
+        elif opt == '-i':
+            print(val)
+        elif opt == '-s':
+            print(val)
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])
