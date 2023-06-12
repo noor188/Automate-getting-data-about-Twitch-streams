@@ -18,14 +18,15 @@ def main(args):
         print(help_meg)
         sys.exit(2)
 
+    print('Great we got your Client ID and secret')
     for opt, val in opts:
         if opt == '-h':
             print(help_meg)
             sys.exit(0)
         elif opt == '-i':
-            print(val)
+            print(f'Client ID {val}')
         elif opt == '-s':
-            print(val)
+            print(f'Client Secret {val}')
 
 
 if __name__ == '__main__':
