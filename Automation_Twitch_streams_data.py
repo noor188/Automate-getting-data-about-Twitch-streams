@@ -7,25 +7,57 @@ import sys
 import getopt
 
 
+class getStreams:
+
+    def __init__(self):
+        self.__clientID = ''
+        self.__clientSecret = ''
+        self.__OAuthToken = ''
+
+    def setClientID(self, clientID):
+        self.__clientID = clientID
+
+    def setClientSecret(self, clientSecret):
+        self.__clientSecret = clientSecret
+
+    def getClientID(self):
+        return self.__clientID
+
+    def getClientSecret(self):
+        return self.__clientSecret
+
+    def getOAuthToken(self):
+        pass
+
+    def run(self):
+        pass
+
+
 def main(args):
+    Twitch_Streams = getStreams()
     help_meg = 'Automation_Twitch_streams_data.py  -i <clientID> -s <clientSecret>'
 
     try:
         opts, args = getopt.getopt(
-            args, 'h:i:s', ['clientID=', 'clientSecret='])
+            args, 'h:s:i:', ['clientID=', 'clientSecret='])
     except getopt.GetoptError as msg:
         print(msg)
         print(help_meg)
         sys.exit(2)
 
+    print('Great we got your Client ID and secret ')
     for opt, val in opts:
         if opt == '-h':
             print(help_meg)
             sys.exit(0)
         elif opt == '-i':
-            print(val)
+            Twitch_Streams.setClientID(val)
         elif opt == '-s':
-            print(val)
+            Twitch_Streams.setClientSecret(val)
+
+    # check
+    print(f'CLient ID {Twitch_Streams.getClientID()}')
+    print(f'CLient secret {Twitch_Streams.getClientSecret()}')
 
 
 if __name__ == '__main__':
