@@ -31,10 +31,11 @@ class getStreams:
     def getOAuthToken(self):
 
         try:
+            # Request to the Twitch API for the /oauth2/token endpoint
             return requests.post(f"https://id.twitch.tv/oauth2/token"
                                  f"?client_id={self.__clientID}"
                                  f"&client_secret={self.__clientSecret}"
-                                 f"&grant_type=client_credentials").json()
+                                 f"&grant_type=client_credentials").json()['access_token']  # deserialization
         except:
             return None
 
@@ -67,7 +68,7 @@ def main(args):
     # check
     print(f'CLient ID {Twitch_Streams.getClientID()}')
     print(f'CLient secret {Twitch_Streams.getClientSecret()}')
-    print(Twitch_Streams.getOAuthToken())
+    print(f'OAuth token {Twitch_Streams.getOAuthToken()}')
 
 
 if __name__ == '__main__':
