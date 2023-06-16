@@ -5,6 +5,8 @@
 '''
 import sys
 import getopt
+import requests
+import json
 
 
 class getStreams:
@@ -27,7 +29,14 @@ class getStreams:
         return self.__clientSecret
 
     def getOAuthToken(self):
-        pass
+
+        try:
+            return requests.post(f"https://id.twitch.tv/oauth2/token"
+                                 f"?client_id={self.__clientID}"
+                                 f"&client_secret={self.__clientSecret}"
+                                 f"&grant_type=client_credentials").json()
+        except:
+            return None
 
     def run(self):
         pass
@@ -49,15 +58,16 @@ def main(args):
     for opt, val in opts:
         if opt == '-h':
             print(help_meg)
-            sys.exit(0)
-        elif opt == '-i':
+            sys.exit()
+        elif opt in ('-i', '--clientID'):
             Twitch_Streams.setClientID(val)
-        elif opt == '-s':
+        elif opt in ('-s', '--clientSecret'):
             Twitch_Streams.setClientSecret(val)
 
     # check
     print(f'CLient ID {Twitch_Streams.getClientID()}')
     print(f'CLient secret {Twitch_Streams.getClientSecret()}')
+    print(Twitch_Streams.getOAuthToken())
 
 
 if __name__ == '__main__':
