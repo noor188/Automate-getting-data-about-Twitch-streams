@@ -15,8 +15,8 @@ class getStreams:
         self.__clientID = ''
         self.__clientSecret = ''
         self.__OAuthToken = ''
-        self.__StreamsURL = 'https://api.twitch.tv/helix/streams?first=100&language=en&&game_id=512980'
-        self.__outputFile = ''
+        self.__StreamsURL = r'https://api.twitch.tv/helix/streams?first=100&language=en&&game_id=512980'
+        self.__outputFile = r'oneHundredStreamsData'
 
     def setClientID(self, clientID):
         self.__clientID = clientID
@@ -33,7 +33,6 @@ class getStreams:
     def getOAuthToken(self):
 
         try:
-            # POST: To submit data to be processed to the Twitch server
             return requests.post(f"https://id.twitch.tv/oauth2/token"
                                  f"?client_id={self.__clientID}"
                                  f"&client_secret={self.__clientSecret}"
@@ -55,19 +54,50 @@ class getStreams:
 
         print('\n \n *** Welcome to Automate Twitch streams application *** \n')
 
+        # POST: To submit clientID/secret to be processed to the Twitch server
+        self.POSTOauthToken()
+
+        # Get 100 streams data
+        oneHandredStreams = self.GETStreamsData()
+
+        self.storeToFile(oneHandredStreams)
+
+    def POSTOauthToken(self):
+        # ************** POST / Oauth token ************** #
         print('Getting the Authorization to access Twitch resources ......')
         self.__OAuthToken = self.getOAuthToken()
+
+        if self.__OAuthToken == '':
+            print("Could not get the Oauth toke ")
+            return
+
         print('\nGot the authorization succesfully !')
 
-        print("\nStart Getting 100 streams metadata .... \n ")
+    def GETStreamsData(self):
+
+        print("\nStart Getting 100 streams data .... \n ")
         headers = {'Content-Type': 'application/json',
                    'Client-ID': self.__clientID,
                    'Authorization': f'Bearer {self.__OAuthToken}'
                    }
-        # GET: To request data from the Twitch server
-        oneHandredStreams = requests.get(
-            self.__StreamsURL, headers=headers).json()['data']
-        print(f"Stored the data succesfully in {self.__outputFile}")
+
+        try:
+            # GET: To request data from the Twitch server
+            oneHandredStreams = requests.get(
+                self.__StreamsURL, headers=headers).json()['data']
+        except requests.exceptions.RequestException as errex:
+            print('Error in HTTP get')
+        return oneHandredStreams
+
+    def storeToFile(self, oneHandredStreams):
+        print(
+            f"Storing the 100 streams data into \{self.__outputFile}\output.txt file")
+        with open(f'{self.__outputFile}/output.txt', "w") as file1:
+            # file1.write(oneHandredStreams)
+            json.dump(oneHandredStreams, file1, indent=4)
+            pass
+
+        print(f"Stored the data succesfully!")
 
 
 def main(args):
